@@ -8,7 +8,7 @@ public class PedidoLocal extends Pedido {
     }
 
     private double valorServico() {
-        return  valorPizzas() + TAXA_SERVICO;
+        return  valorItens() + TAXA_SERVICO;
     }
 
         @Override 

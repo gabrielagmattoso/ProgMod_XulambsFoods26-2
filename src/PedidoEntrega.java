@@ -1,5 +1,5 @@
 public class PedidoEntrega extends Pedido{
-    public static final int MAX_PIZZAS =8;
+    public static final int MAX_PIZZAS =12;
     
     private ETaxaEntrega taxaEntrega;
     private double distanciaEntrega;
@@ -22,7 +22,7 @@ public class PedidoEntrega extends Pedido{
 
     @Override 
     public double precoAPagar(){
-        return valorPizzas() + taxaEntrega.valorTaxa();
+        return valorItens() + taxaEntrega.valorTaxa();
     }
 
     @Override 

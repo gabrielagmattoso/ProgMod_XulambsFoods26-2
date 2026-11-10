@@ -28,7 +28,7 @@ import java.util.LinkedList;
 public abstract class Pedido {
     private  static int ultimoPedido;
     private LocalDate data;
-    protected LinkedList<Pizza> pizzas;
+    protected LinkedList<IProduto> pizzas;
     private int idPedido;
     private boolean aberto;
 
@@ -52,8 +52,8 @@ public abstract class Pedido {
      * @throws PedidoFechadoException
      * * @throws IllegalArgumentException
      */
-    public int adicionarPizza(Pizza pizza){
-        if(pizza == null)
+    public int adicionar(IProduto produto){
+        if(produto == null)
             throw new IllegalArgumentException("Pizza não foi criada corretamente. Não será adicionada ao pedido");
 
         verificarInclusao();
@@ -71,24 +71,24 @@ public abstract class Pedido {
 
     public abstract double precoAPagar();
     
-    protected double valorPizzas(){
+    protected double valorItens(){
         double preco = 0d;
-        for (Pizza pizza : pizzas) {
-            preco += pizza.valorFinal();
+        for (IProduto item: itens) {
+            preco += item.valorFinal();
         }
         return preco;
     }
 
     protected String cabecalho(){
         String estado = aberto ? "aberto" : "fechado";
-        return ( String.format("Pedido nº %d - %s (%s) com %d pizzas\n", idPedido, data, estado, pizzas.size()));
+        return ( String.format("Pedido nº %d - %s (%s) com %d Itens\n", idPedido, data, estado, pizzas.size()));
     }
 
     protected String detalhesPedido(){
         StringBuilder detalhes = new StringBuilder();
-        for (Pizza pizza : pizzas) {
+        for (IProduto item: itens) {
             detalhes.append(String.format("----\n%s\n", 
-                            pizza.toString()));
+                            item.toString()));
         }
         return detalhes.toString();
     }

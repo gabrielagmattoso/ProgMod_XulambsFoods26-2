@@ -27,7 +27,7 @@ import java.security.InvalidParameterException;
 /**
  * Pizza: com preço base fixo e preço final definido pela quantidade de ingredientes.
  */
-public class Pizza {
+public class Pizza implements IPedido{
     private static final double PRECO_BASE;
 	private static final int MAXIMO_INGREDIENTES;
 	private static final double VALOR_INGREDIENTE;
@@ -77,6 +77,7 @@ public class Pizza {
      * Retorna o preço a se pagar por uma pizza. (base + valor dos adicionais)
      * @return Double positivo com o valor da pizza.
      */
+    @Override 
 	public double valorFinal() {
 		return PRECO_BASE + valorAdicionais() + borda.getValor();
 	}
