@@ -115,17 +115,34 @@ public class XulambsApp {
         System.out.println("Escolha sua bebida: ");
         for (int i = 0; i < bebidas.length; i++) {
             System.out.println(String.format("%d - %s (R$ %.2f)",
-                    i + 1, bebidas[i].getNome(), bebidas[i].getValor()));
+                    i + 1, bebidas[i].getNome(), bebidas[i].getPreco()));
         }
 
         int escolha = lerNumero("Digite sua opção: ");
 
-        return null; 
+        if (escolha < 1 || escolha > bebidas.length) {
+            System.out.println("Valor inválido. Escolha novamente.");
+            return escolherBebida();
+        }
+        return new Bebida(bebidas[escolha - 1]);
     }
 
     Sobremesa escolherSobremesa() {
-     
-        return null; 
+        ESobremesas[] sobremesas = ESobremesas.values();
+
+        System.out.println("Escolha sua sobremesa: ");
+        for (int i = 0; i < sobremesas.length; i++) {
+            System.out.println(String.format("%d - %s (R$ %.2f)",
+                    i + 1, sobremesas[i].getNome(), sobremesas[i].getPreco()));
+        }
+
+        int escolha = lerNumero("Digite sua opção: ");
+
+        if (escolha < 1 || escolha > sobremesas.length) {
+            System.out.println("Valor inválido. Escolha novamente.");
+            return escolherSobremesa();
+        }
+        return new Sobremesa(sobremesas[escolha - 1]);
     }
 
     IProduto escolherProduto() {
@@ -181,8 +198,10 @@ public class XulambsApp {
 
     void abrirPedido() {
         Pedido novoPedido = escolherTipoPedido();
-
-     
+        if (novoPedido == null) {
+            System.out.println("Tipo de pedido inválido.");
+            return;
+        }
 
         String continuar;
         do {

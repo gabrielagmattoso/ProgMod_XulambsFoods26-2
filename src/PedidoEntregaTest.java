@@ -12,7 +12,7 @@ public class PedidoEntregaTest {
     void setUp(){
         pedido = new PedidoEntrega(5);
         pizzaVazia = new Pizza();
-        pedido.adicionarPizza(pizzaVazia);
+        pedido.adicionar(pizzaVazia);
     }
 
     @Test 
@@ -38,10 +38,10 @@ public class PedidoEntregaTest {
     public void naoUltrapassaMaximoDePizzas(){
         //arrange
         for (int i = 1; i < 8; i++) {
-            pedido.adicionarPizza(new Pizza());
+            pedido.adicionar(new Pizza());
         }
         //act
-        int quantidade = pedido.adicionarPizza(new Pizza());
+        int quantidade = pedido.adicionar(new Pizza());
         //assert
         assertEquals(8, quantidade);
     }

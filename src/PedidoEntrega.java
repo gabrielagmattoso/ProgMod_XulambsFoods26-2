@@ -1,23 +1,30 @@
 public class PedidoEntrega extends Pedido{
-    public static final int MAX_PIZZAS =12;
+    public static final int MAX_PIZZAS = 12;
     
     private ETaxaEntrega taxaEntrega;
     private double distanciaEntrega;
 
     public PedidoEntrega(double distancia){
-        if(distancia < 0.1)
-            throw new IllegalArgumentException();
-        
         super();
+        if(distancia < 0.1)
+            throw new IllegalArgumentException("Distância de entrega inválida");
+        
         distanciaEntrega = distancia;
         taxaEntrega = ETaxaEntrega.definirEntrega(distancia);
     }
 
+    private long contarPizzas(){
+        return itens.stream().filter(item -> item instanceof Pizza).count();
+    }
+
+    /**
+     * O limite de pizzas vale só para pizzas: bebidas e sobremesas não contam.
+     */
     @Override 
-    protected void verificarInclusao(){
-        super.verificarInclusao();
-        if(pizzas.size() == MAX_PIZZAS)
-            throw new IllegalStateException();
+    protected void verificarInclusao(IProduto produto){
+        super.verificarInclusao(produto);
+        if(produto instanceof Pizza && contarPizzas() >= MAX_PIZZAS)
+            throw new IllegalStateException("Pedido para entrega aceita no máximo " + MAX_PIZZAS + " pizzas");
     }
 
     @Override 

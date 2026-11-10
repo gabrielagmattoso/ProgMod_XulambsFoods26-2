@@ -28,37 +28,37 @@ import java.util.LinkedList;
 public abstract class Pedido {
     private  static int ultimoPedido;
     private LocalDate data;
-    protected LinkedList<IProduto> pizzas;
+    protected LinkedList<IProduto> itens;
     private int idPedido;
     private boolean aberto;
 
     public Pedido(){
         ultimoPedido++;
         data = LocalDate.now();
-        pizzas = new LinkedList<>();
+        itens = new LinkedList<>();
         idPedido = ultimoPedido;
         aberto = true;
     }
 
-    protected void verificarInclusao(){
+    protected void verificarInclusao(IProduto produto){
         if(!aberto)
             throw new PedidoFechadoException(idPedido);
     }
 
     /**
-     * 
-     * @param pizza
-     * @return
-     * @throws PedidoFechadoException
-     * * @throws IllegalArgumentException
+     * Adiciona um produto (pizza, bebida ou sobremesa) ao pedido.
+     * @param produto Produto a ser adicionado
+     * @return Quantidade de itens do pedido após a inclusão
+     * @throws PedidoFechadoException se o pedido estiver fechado
+     * @throws IllegalArgumentException se o produto for nulo
      */
     public int adicionar(IProduto produto){
         if(produto == null)
-            throw new IllegalArgumentException("Pizza não foi criada corretamente. Não será adicionada ao pedido");
+            throw new IllegalArgumentException("Produto não foi criado corretamente. Não será adicionado ao pedido");
 
-        verificarInclusao();
-        pizzas.add(pizza);
-        return pizzas.size();
+        verificarInclusao(produto);
+        itens.add(produto);
+        return itens.size();
     }
 
     public void fecharPedido(){
@@ -81,7 +81,7 @@ public abstract class Pedido {
 
     protected String cabecalho(){
         String estado = aberto ? "aberto" : "fechado";
-        return ( String.format("Pedido nº %d - %s (%s) com %d Itens\n", idPedido, data, estado, pizzas.size()));
+        return ( String.format("Pedido nº %d - %s (%s) com %d itens\n", idPedido, data, estado, itens.size()));
     }
 
     protected String detalhesPedido(){
